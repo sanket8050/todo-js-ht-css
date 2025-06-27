@@ -55,7 +55,8 @@ body{
 
 #task-list li .checkbox{
     min-width: 20px;
-    height: 20px;
+    height: 25px;
+    width: 25px;
     border: 2px solid rgba(255,255,255,0.3);
     border-radius: 50%;
     appearance: none;
@@ -65,7 +66,7 @@ body{
 }
 
 #task-list li .checkbox:hover{
-    background:#ff6f91;
+    background:#12d30f;
     transform: scale(1.1);
 }
 
@@ -76,7 +77,7 @@ body{
     left: 0;
     top: 0;
     border-radius: 50%;
-    background: #ee7a6b;
+    background: #12d30f;
     font-weight: bolder;
     width: 100%;
     height: 100%;
@@ -102,7 +103,7 @@ body{
     padding:8px;
     align-items: center;
     flex-direction: column;
-    margin-left: 10%;
+    /* margin-left: 10%; */
     gap:30px;
     color: #fff;
     border-radius: 20px;
@@ -153,19 +154,21 @@ form ::placeholder{
 
 .input-area button:hover{
     transform: scale(1.1);
-    background:#FF9587;
+    background:#56DFCF;
 }
 
 .todos-container {
     display: flex;
     align-items: center;
     justify-content: center;
+   
 
 
 }
 
 #task-list{
     width: 100%;
+  
 }
 
 .task-btn{
@@ -199,10 +202,11 @@ form ::placeholder{
 
 }
 .task-btn .edit-btn{
-    background: #ddef3c;
+    background: #eeff00;
+    border-color: #e1ec192e;
 }
 .task-btn .delete-btn{
-    background: #fa4646;
+    background: #DC2525;
 }
 
 .todos-container{
@@ -210,6 +214,7 @@ form ::placeholder{
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .stat-container{
@@ -221,9 +226,12 @@ form ::placeholder{
     justify-content: space-between;
     gap: 20px;
     width: 100%;
+    overflow-y: auto;
 }
 .details{
     width: 100%;
+
+
 }
 .details h3{
     color:#fff;
@@ -241,7 +249,7 @@ form ::placeholder{
 #progress {
     height: 100%;
     width: 50%;
-    background: #FF9587;
+    background: #0ed63d;
     border-radius: 8px 0 0 8px;
     transition: width 0.3s ease;
 }
@@ -252,9 +260,53 @@ form ::placeholder{
     justify-content: center;
     width: 80px;height: 80px;
     background: rgb(255,194,209,0.3);
-    border: 2px solid #FF9587;
+    border: 2px solid #000000;
     border-radius: 50%;
-    background-color: #FF9587;
+    background-color: #28c21d;
     font-size: 1.2rem;
     font-weight: bold;
 }
+
+
+
+
+/* === Horizontal-expanding To-Do Layout === */
+body {
+  /* overflow-x: auto;       allows horizontal scrolling */
+  overflow-y: auto;     /* prevents vertical scrolling */
+  min-height: 100vh;
+}
+
+
+/*/ mobile readable*/ 
+
+@media (max-width:600){
+    .container{
+        margin: 0 20px;
+        padding: 60px;
+        
+    }
+    .to-do-app{
+        padding:1.5rem;
+        gap:20px;
+    }
+
+    #numbers{
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+
+    .input-area{
+        font-size: 1rem;
+    }
+
+    #task-list{
+        font-size: 1rem;
+    }
+    
+}
+
+
+
+
