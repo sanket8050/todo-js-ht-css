@@ -1,3 +1,5 @@
+// const { json } = require("express");
+
 document.addEventListener("DOMContentLoaded",()=>{
     const taskinput = document.getElementById("task-input");
     const addTaskbtn = document.getElementById("add-task-btn");
@@ -7,11 +9,17 @@ document.addEventListener("DOMContentLoaded",()=>{
     let completed;
     const progressbar = document.getElementById("progress");
     const progressnums = document.getElementById("number");
+    const toto = document.querySelector(".to-do-app");
 
+    
+    
 
     const toggleEmptyState = ()=>{
         emptyimg.style.display = tasklist.children.length === 0 ? 'block' : 'none';
-        todoscontainer.style.display = tasklist.children.length > 0 ? '100%' : '50%';
+        
+        todoscontainer.style.display = tasklist.children.length > 0 ? 'flex' : 'none';
+
+        
     };
 
     const updateProgress = (checkCompetion = true)=>{
@@ -19,19 +27,35 @@ document.addEventListener("DOMContentLoaded",()=>{
         const completedTask = tasklist.querySelectorAll(".checkbox:checked").length;
         progressbar.style.width = totalTask ?  `${(completedTask / totalTask)*100}%` :'0%';
         progressnums.textContent= `${completedTask}/${totalTask}`;
+        
 
         if(checkCompetion && totalTask > 0 && completedTask === totalTask){
-        confetti();
+            runConfetti();
         }
 
 
+    };
+
+    const saveTaskToLocalStorage = ()=>{
+        const tasks = Array.from(tasklist.children).map(li => {
+            const checkbox = li.querySelector('.checkbox');
+            return {
+                text: li.querySelector('span').textContent,
+                completed: checkbox.checked
+            };
+        }   );
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+
     }
     
-
-
-
-    const addtask = (text,completed = false,checkCompetion = true)=>{
+    const loadTaskFromLocalStorage = ()=>{
+        const savedTasks = JSON.parse(localStorage.getItem('tasks'))  || [];
+        savedTasks.forEach(({text,completed})=> addtask(text,completed,false));
+        toggleEmptyState();
+        updateProgress();
         
+    };
+    const addtask = (text,completed = false,checkCompetion = true)=>{
         const taskText = text || taskinput.value.trim();
         if(!taskText){
             return;
@@ -63,7 +87,9 @@ document.addEventListener("DOMContentLoaded",()=>{
                 editbtn.style.opacity = 1;
                 editbtn.style.pointerEvents = 'auto';
             }
+
             updateProgress();
+            saveTaskToLocalStorage();
         });
 
 
@@ -72,6 +98,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 taskinput.value = li.querySelector('span').textContent;
                 li.remove();
                 updateProgress(false);
+                saveTaskToLocalStorage();
             }
         });
 
@@ -79,12 +106,14 @@ document.addEventListener("DOMContentLoaded",()=>{
             li.remove();
             toggleEmptyState();
             updateProgress(checkCompetion);
+            saveTaskToLocalStorage();
         });
 
         tasklist.appendChild(li);
         taskinput.value = "";
         toggleEmptyState();
         updateProgress();
+        saveTaskToLocalStorage();
     };
 
     addTaskbtn.addEventListener("click", ()=> addtask());
@@ -97,34 +126,46 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     toggleEmptyState();
     updateProgress();
+    loadTaskFromLocalStorage();
 });
+const count = 400,
+  defaults = {
+    origin: { y: 0.7 },
+  };
 
-const confetti=()=>{
-    const end = Date.now() + 15 * 1000;
+function fire(particleRatio, opts) {
+  confetti(
+    Object.assign({}, defaults, opts, {
+      particleCount: Math.floor(count * particleRatio),
+    })
+  );
+}
 
-// go Buckeyes!
-const colors = ["#bb0000", "#ffffff"];
-
-(function frame() {
-  confetti({
-    particleCount: 2,
-    angle: 60,
-    spread: 55,
-    origin: { x: 0 },
-    colors: colors,
+function runConfetti() {
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
   });
 
-  confetti({
-    particleCount: 2,
-    angle: 120,
-    spread: 55,
-    origin: { x: 1 },
-    colors: colors,
+  fire(0.2, {
+    spread: 60,
   });
 
-  if (Date.now() < end) {
-    requestAnimationFrame(frame);
-  }
-})();
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  });
 
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  });
+
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  });
 }
