@@ -42,10 +42,10 @@ body{
     padding: 8px 10px;
     border-radius: 30px;
     font-size: 1.2rem;
-    color:#fff;
+    color:#ffffff;
     position: relative;
     transition: box-shadow 0.2 ease;
-
+    
 }
 
 #task-list li:hover{

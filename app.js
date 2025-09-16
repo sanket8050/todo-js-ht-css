@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                 text: li.querySelector('span').textContent,
                 completed: checkbox.checked
             };
-        }   );
+        });
         localStorage.setItem('tasks', JSON.stringify(tasks));
 
     }
