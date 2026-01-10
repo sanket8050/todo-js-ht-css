@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     const tasklist = document.getElementById("task-list");
     const emptyimg = document.querySelector(".no-task");
     const todoscontainer = document.querySelector(".todos-container");
+
+
     let completed;
     const progressbar = document.getElementById("progress");
     const progressnums = document.getElementById("number");
